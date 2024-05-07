@@ -11,8 +11,6 @@ from fastapi.responses import JSONResponse
 import re
 from slurm import slurm_auth
 import logging
-from k8s.client import client
-from k8s.nodestat import KubeResources
 
 INVALID_STATUS = ["DOWN", "DRAINED", "FAIL", "FAILING", "INVAL", "UNKNOWN", "NOT_RESPONDING"]
 pattern = r"\d+"
@@ -107,9 +105,3 @@ def get_hpc_cluster(request: Request):
     result["workloads"] = jobStates
     result['workingSates'] = workingSates
     return result
-
-
-@router.get("/k8s")
-def get_k8s_cluster(request: Request):
-    resource = KubeResources(client.CoreV1Api())
-    return resource.getClusterUsage()
