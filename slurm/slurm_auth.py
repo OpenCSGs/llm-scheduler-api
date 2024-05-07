@@ -40,6 +40,7 @@ def makejwt(username):
         "exp": int(time.time() + 604800),
         "iat": int(time.time()),
         "sun": username,
+        "name": username
     }
     compact_jws = a.encode(message, signing_key, algorithm="HS256")
     return compact_jws
@@ -48,7 +49,7 @@ def makejwt(username):
 def decode(request):
     token = request.headers.get("X-SLURM-USER-TOKEN")
     if settings.ON_PREMISE is True:
-        return jwt.decode(token, key=signing_key, algorithm="HS256")
+        return jwt.decode(token, key=signing_key, algorithms=["HS256"])
     else:
         sdk = request.app.state.CASDOOR_SDK
         userinfos = sdk.parse_jwt_token(token, options={
@@ -60,12 +61,11 @@ async def verify(request: Request):
     token = request.headers.get("X-SLURM-USER-TOKEN")
     try:
         if settings.ON_PREMISE is True:
-            userinfos = jwt.decode(token, key=signing_key, algorithm="HS256")
+            userinfos = jwt.decode(token, key=signing_key, algorithms=["HS256"])
         else:
             sdk = request.app.state.CASDOOR_SDK
             userinfos = sdk.parse_jwt_token(token, options={
                 "verify_iat": False, "verify_nbf": False, })
-            print(userinfos)
         if userinfos['name'] != request.headers.get("X-SLURM-USER-NAME"):
             raise HTTPException(status_code=401, detail="Invalid token")
     except:
