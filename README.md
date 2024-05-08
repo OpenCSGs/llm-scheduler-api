@@ -1,5 +1,7 @@
 # LLM Scheduler API
 
+## Prerequisite
+Slurm engine was installed. Reference: [Slurm Installation](./docs/slurm_install.md)
 ## Installation
 
 1. Install dependency：
