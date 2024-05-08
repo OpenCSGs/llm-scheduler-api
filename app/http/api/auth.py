@@ -18,7 +18,7 @@ async def signin(request: Request):
         user = await request.json()
         result = authenticate(user['username'], user['password'])
         if result is True:
-            isadmin = isAdmin(user['username'], token)
+            isadmin = isAdmin(user['username'])
             token = slurm_auth.makejwt(user['username'], isadmin)
             return {'success': True, 'token': token, 'userinfos': {'username': user['username'], 'name': user['username'], "isAdmin": isadmin}}
         else:
@@ -41,7 +41,7 @@ async def signin(request: Request):
 
 def isAdmin(username, newToken=None):
     if newToken is None:
-        newToken = slurm_auth.makejwt(username)
+        newToken = slurm_auth.makejwt(username, False)
     headers = {
         "Content-type": "application/json",
         "X-SLURM-USER-NAME": username,
