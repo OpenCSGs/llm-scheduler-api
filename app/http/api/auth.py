@@ -18,8 +18,8 @@ async def signin(request: Request):
         user = await request.json()
         result = authenticate(user['username'], user['password'])
         if result is True:
-            token = slurm_auth.makejwt(user['username'])
             isadmin = isAdmin(user['username'], token)
+            token = slurm_auth.makejwt(user['username'], isadmin)
             return {'success': True, 'token': token, 'userinfos': {'username': user['username'], 'name': user['username'], "isAdmin": isadmin}}
         else:
             return JSONResponse({"status": 'error', 'message': 'Invalid username or password'}, status_code=403)

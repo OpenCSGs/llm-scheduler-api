@@ -8,7 +8,7 @@ import logging
 
 def updateUser(username, groups):
     session = requests.Session()
-    newToken = slurm_auth.makejwt("root")
+    newToken = slurm_auth.makejwt("root", True)
     headers = {
         "Content-type": "application/json",
         "X-SLURM-USER-NAME": "root",
@@ -68,7 +68,7 @@ def updateUser(username, groups):
 
 def updateUsers(userGroups: list):
     session = requests.Session()
-    newToken = slurm_auth.makejwt("root")
+    newToken = slurm_auth.makejwt("root", True)
     headers = {
         "Content-type": "application/json",
         "X-SLURM-USER-NAME": "root",
@@ -131,7 +131,7 @@ def updateUsers(userGroups: list):
 
 def updateGroup(name, desc, org="opencsg"):
     session = requests.Session()
-    newToken = slurm_auth.makejwt("root")
+    newToken = slurm_auth.makejwt("root", True)
     headers = {
         "Content-type": "application/json",
         "X-SLURM-USER-NAME": "root",
@@ -162,7 +162,7 @@ def updateGroup(name, desc, org="opencsg"):
 
 def assignUsersToGroup(message):
     session = requests.Session()
-    newToken = slurm_auth.makejwt("root")
+    newToken = slurm_auth.makejwt("root", True)
     headers = {
         "Content-type": "application/json",
         "X-SLURM-USER-NAME": "root",

@@ -35,12 +35,13 @@ def add_slurm_header(request: Request):
     )
 
 
-def makejwt(username):
+def makejwt(username, isadmin):
     message = {
         "exp": int(time.time() + 604800),
         "iat": int(time.time()),
         "sun": username,
-        "name": username
+        "name": username,
+        "isAdmin": isadmin
     }
     compact_jws = a.encode(message, signing_key, algorithm="HS256")
     return compact_jws
