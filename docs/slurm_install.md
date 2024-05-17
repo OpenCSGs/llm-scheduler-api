@@ -74,12 +74,12 @@ make -j $CORES
 make install
 ```
 
-5. check 
+6. check 
 /usr/sbin/slurmd
 plugin so: 
 /usr/local/lib/slurm
 
-6. slurm auth
+7. slurm auth
 ```
 mkdir -p /var/spool/slurm
 chown slurm: /var/spool/slurm
@@ -91,17 +91,17 @@ mkdir -p  /var/spool/slurm/ctld/
 cp $llm-scheduler-api/slurm/jwt_hs256.key /var/spool/slurm/ctld/
 ```
 
-7. refer $llm-scheduler-api/slurm/conf and configure /etc/slurm/slurm.conf, /etc/slurm/slurmdbd.conf, /etc/slurm/slurmrestd.conf
-6. start slrum daemon on every node
+8. refer $llm-scheduler-api/slurm/conf and configure /etc/slurm/slurm.conf, /etc/slurm/slurmdbd.conf, /etc/slurm/slurmrestd.conf
+9. start slrum daemon on every node
 ```
 slurmdbd
 slurmd
 slurmctrl
 ```
 
-7. config ldap for all nodes: https://computingforgeeks.com/how-to-configure-ubuntu-as-ldap-client/
+10. config ldap for all nodes: https://computingforgeeks.com/how-to-configure-ubuntu-as-ldap-client/
 
-8. start slurm slurmrestd in head node and configure slurm api to .env
+11. start slurm slurmrestd in head node and configure slurm api to .env
 ```
 slurmrestd -f /etc/slurm/slurmrestd.conf -a rest_auth/jwt 0.0.0.0:3000 -vvvv 2>&1 >> slurm.log &
 ```
